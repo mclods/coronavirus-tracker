@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>mclods Corona Virus Tracker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<script src="https://unpkg.com/feather-icons"></script>
+
+<body>
+    <div class="container">
+        <h1>Corona Virus Tracker</h1>
+        <p>This Application lists the Current Number of Cases Reported across the Globe.</p>
+
+        <div class="jumbotron">
+            <h1 class="display-4" th:text="${totalReportedCases}"></h1>
+            <p class="lead">Total Cases Reported as of Today</p>
+            <hr class="my-4">
+            <h3 th:text="${totalNewCases}"></h3>
+            <p>New Cases Reported since Previous Day</p>
+        </div>
+
+        <table class="table table-striped">
+            <tr>
+                <th>State</th>
+                <th>Country</th>
+                <th>Total Cases Reported</th>
+                <th>Changes Since Last Day</th>
+            </tr>
+            <tr th:each="locationStat : ${locationStats}">
+                <td th:text="${locationStat.state}"></td>
+                <td th:text="${locationStat.country}"></td>
+                <td th:text="${locationStat.latestTotalCases}">0</td>
+                <td th:utext="${locationStat.diffFromPrevDay} + '&nbsp;&nbsp;&nbsp;' + ${up}" th:if="${locationStat.diffFromPrevDay > 0}">0</td>
+                <td th:utext="${locationStat.diffFromPrevDay} + '&nbsp;&nbsp;&nbsp;' + ${down}" th:if="${locationStat.diffFromPrevDay < 0}">0</td>
+                <td th:utext="${locationStat.diffFromPrevDay} + '&nbsp;&nbsp;&nbsp;' + ${same}" th:if="${locationStat.diffFromPrevDay == 0}">0</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+      feather.replace()
+    </script>
+
+</body>
+
+</html>
